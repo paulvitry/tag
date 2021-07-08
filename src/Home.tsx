@@ -10,8 +10,7 @@ import {
   SafeAreaView,
   Image,
   TextInput,
-  TouchableHighlight,
-  Button
+  Button,
 } from 'react-native';
 import SaaltoZebraDataWedge, {DataWedgeEvent, ScanDataEvent} from 'react-native-saalto-zebra-wedge';
 import ModalSelector from 'react-native-modal-selector'
@@ -133,7 +132,7 @@ const Home = () => {
 
   let text = '';
 
-  if (scannedRfID || text == '') {
+  if (scannedRfID) {
     text = scannedRfID;
     return (
       <SafeAreaView style={{backgroundColor: "black", flex: 1, alignItems:'center'}}>
