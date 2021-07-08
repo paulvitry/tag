@@ -1,0 +1,3 @@
+[submodule "SaaltoZebraDataWedge"]
+	path = SaaltoZebraDataWedge
+	url = git@gitlab.com:cml-saalto/saalto/saaltozebradatawedge.git
