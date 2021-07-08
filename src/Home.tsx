@@ -17,6 +17,8 @@ import SaaltoZebraDataWedge, {DataWedgeEvent, ScanDataEvent} from 'react-native-
 import ModalSelector from 'react-native-modal-selector'
 import FormatRfID from '../FormatRfID';
 
+const axios = require('axios').default;
+
 
 // var RNFS = require('react-native-fs');
 
@@ -34,14 +36,14 @@ const dataCategories = [{key: 0, label: 'A'}, {key: 1, label: 'B'}, {key: 2, lab
 const dataManufacturer = [{key: 0, label: 'Barbarie'}, {key: 1, label: 'Ansquin-Sockheel'}]
 
 
-const App = () => {
+const Home = () => {
   const [scannedRfID, setScannedRfID] = useState<string | null>(null);
   const [scanError, setScanError] = useState<boolean>(false);
 
-  const [year, setYear] = useState<string | null>('2021');
-  const [category, setCategory] = useState<string | null>('A');
-  const [manufacturer, setManufacturer] = useState<string | null>('Barbarie');
-  const [numbers, setNumbers] = useState<string | null>(null);
+  const [year, setYear] = useState<string>('2021');
+  const [category, setCategory] = useState<string>('A');
+  const [manufacturer, setManufacturer] = useState<string>('Barbarie');
+  const [numbers, setNumbers] = useState<string>('');
 
   const barCodeEventEmitterRef = useRef<NativeEventEmitter | null>(null);
   const scannedDataListener = useRef<EmitterSubscription | null>(null);
@@ -93,6 +95,7 @@ const App = () => {
   };
 
   const validate = () => {
+    sendForm()
     if (numbers === null || numbers.length === 5 || numbers.length === 0 ) {
       setYear("2021");
       setCategory("A");
@@ -110,41 +113,23 @@ const App = () => {
     return () => disposeBarCode();
   });
 
-  // constructor = () => {
-  //   console.log('constructor')
-  // }
-
-  const test = () => {
-
+  const sendForm = () => {
+    let form = {  "year": year,
+                  "category": category,
+                  "manufacturer": manufacturer,
+                  "numbers": numbers,
+                  "creationDate": Date.now()
+                };
+    console.log(form)
+    axios.put('https://qr-code-scanner-form-default-rtdb.europe-west1.firebasedatabase.app/forms/' + Date.now() + '.json', form)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log('error')
+      console.log(error);
+    });
   }
-
-  // const getFilesAndDirectories = () => {
-
-  // // get a list of files and directories in the main bundle
-  //   RNFS.readDir(RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-  //     .then((result) => {
-  //       console.log('GOT RESULT', result);
-
-  //       // stat the first file
-  //       return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-  //     })
-  //     .then((statResult) => {
-  //       if (statResult[0].isFile()) {
-  //         // if we have a file, read it
-  //         return RNFS.readFile(statResult[1], 'utf8');
-  //       }
-
-  //       return 'no file';
-  //     })
-  //     .then((contents) => {
-  //       // log the file contents
-  //       console.log(contents);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message, err.code);
-  //     });
-  // }
-
 
   let text = '';
 
@@ -215,4 +200,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
