@@ -35,7 +35,7 @@ const dataCategories = [{key: 0, label: 'A'}, {key: 1, label: 'B'}, {key: 2, lab
 const dataManufacturer = [{key: 0, label: 'Barbarie'}, {key: 1, label: 'Ansquin-Sockheel'}]
 
 
-const Home = () => {
+const App = () => {
   const [scannedRfID, setScannedRfID] = useState<string | null>(null);
   const [scanError, setScanError] = useState<boolean>(false);
 
@@ -138,7 +138,7 @@ const Home = () => {
       <SafeAreaView style={{backgroundColor: "black", flex: 1, alignItems:'center'}}>
         <Text style={{color:"#00FF00", fontSize: 20, fontWeight:'bold', marginVertical: 10}}>Tag scanné : {text}</Text>
 
-        <Text style={{color:"white"}}>Select year :</Text>
+        <Text style={{color:"white"}}>Selectionnez annnée :</Text>
         <ModalSelector
                     data={dataYears}
                     initValue={year}
@@ -150,7 +150,7 @@ const Home = () => {
                     style={{flex: 1, width:'80%'}}
                     />
 
-        <Text style={{color:"white"}}>Select category :</Text>
+        <Text style={{color:"white"}}>Selectionnez categorie :</Text>
         <ModalSelector
                     data={dataCategories}
                     initValue={category}
@@ -161,7 +161,7 @@ const Home = () => {
                     onChange={(option)=>{ setCategory(option.label) ; console.log(option)}}
                     style={{flex: 1, width:'80%'}}
                     />
-        <Text style={{color:"white"}}>Selectionnez Fabricant :</Text>
+        <Text style={{color:"white"}}>Selectionnez fabricant :</Text>
         <ModalSelector
                     data={dataManufacturer}
                     initValue={manufacturer}
@@ -199,4 +199,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default App;
