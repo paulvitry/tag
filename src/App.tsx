@@ -1,7 +1,7 @@
 import React from 'react';
-import {useEffect} from 'react';
-import {useRef} from 'react';
-import {useState} from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import { useState } from 'react';
 import {
   EmitterSubscription,
   NativeEventEmitter,
@@ -12,7 +12,7 @@ import {
   TouchableHighlight,
   Button,
 } from 'react-native';
-import SaaltoZebraDataWedge, {DataWedgeEvent, ScanDataEvent} from 'react-native-saalto-zebra-wedge';
+import SaaltoZebraDataWedge, { DataWedgeEvent, ScanDataEvent } from 'react-native-saalto-zebra-wedge';
 import FormatRfID from './../FormatRfID';
 import Slider from '@react-native-community/slider';
 
@@ -32,6 +32,7 @@ const App = () => {
   const [category, setCategory] = useState<string | null>('A');
   const [manufacturer, setManufacturer] = useState<string | null>('Barbarie');
   const [numbers, setNumbers] = useState<string | null>(null);
+  const [scanView, setScanView] = useState<boolean>(false);
 
 
   const initBarCode = async () => {
@@ -179,9 +180,10 @@ const App = () => {
       <View style={{ flex: 1, width: '100%' }}>
         <Text style={{ color: "white" }}>Séléctionnez année : <Text style={{ fontSize: 18 }}>{year}</Text></Text>
         <Slider
-          style={{marginTop: 20}}
+          style={{ marginTop: 20 }}
           onValueChange={setYear}
           step={1}
+          value={year}
           minimumValue={1999}
           maximumValue={2021}
           minimumTrackTintColor="#yellow"
@@ -197,8 +199,14 @@ const App = () => {
   else if (scanError) text = 'Tag invalide';
   else text = 'aucun tag scanné';
 
-    return (
-      <SafeAreaView style={{ backgroundColor: "black", flex: 1, alignItems: 'center' }}>
+  return (
+    <SafeAreaView style={{ backgroundColor: "black", flex: 1, alignItems: 'center' }}>
+      {scanView ?
+        <View>
+            <Button title="Retournez au formulaire" onPress={() => {setScanView(false)}}/>
+
+        </View>
+        :
 
         <View style={{ flex: 1, alignItems: 'center', width: '90%', heigth: '100%' }}>
           <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold', marginVertical: 10, flex: 1 }}>Tag scanné : {text}</Text>
@@ -212,15 +220,18 @@ const App = () => {
             <TextInput keyboardType='numeric' value={numbers} onChangeText={setNumbers} style={{ height: 40, width: '100%', backgroundColor: "white", borderRadius: 5 }} />
           </View>
 
-          <View style={{ flex: 1, justifyContent: 'center'}}>
-            {selectedQRCode? 
-              <Button title={"   Envoyer   "} onPress={sendForm}/>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            {selectedQRCode ?
+              <Button title={"   Envoyer   "} onPress={sendForm} />
               :
-              <Button title={"Scanner QRCode"} onPress={() => {console.log("Scan QRCode")}}/>
+              <Button title={"Scanner QRCode"} onPress={() => { setScanView(true) }} />
             }
-            </View>
+          </View>
         </View>
-      </SafeAreaView>
+
+      }
+
+    </SafeAreaView>
 
   );
 };
