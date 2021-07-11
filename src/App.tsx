@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 import SaaltoZebraDataWedge, {DataWedgeEvent, ScanDataEvent} from 'react-native-saalto-zebra-wedge';
-import FormatRfID from './FormatRfID';
+import FormatRfID from './../FormatRfID';
 
 const App = () => {
   const [scannedRfID, setScannedRfID] = useState<string | null>(null);
