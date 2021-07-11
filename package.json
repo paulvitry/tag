@@ -10,13 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@apollo/client": "^3.3.21",
-    "axios": "^0.21.1",
-    "graphql": "^15.5.1",
     "react": "17.0.1",
     "react-native": "0.64.2",
-    "react-native-modal-selector": "^2.0.4",
-    "react-native-picker-select": "^8.0.4",
     "react-native-saalto-zebra-wedge": "file:SaaltoZebraDataWedge"
   },
   "devDependencies": {
